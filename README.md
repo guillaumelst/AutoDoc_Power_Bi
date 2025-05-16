@@ -41,7 +41,7 @@ pip install python-docx chardet
    ```bash
 git clone https://github.com/votre-utilisateur/votre-projet.git
 cd votre-projet
-```
+    ```
 
 2. Installez les dépendances (voir [Prérequis](#prérequis)).
 
