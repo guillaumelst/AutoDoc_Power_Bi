@@ -107,6 +107,11 @@ python autodoc.py
 
 ---
 
+## 🖼️ Exemple de sortie
+
+Voici un aperçu du PDF généré pour un collaborateur :  
+![Exemple de sortie](images/output_example.png)
+
 ## Licence
 
 Ce projet est distribué sous licence MIT.
