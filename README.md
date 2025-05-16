@@ -45,8 +45,6 @@ cd votre-projet
 
 2. Installez les dépendances (voir [Prérequis](#prérequis)).
 
----
-
 ## Structure du projet
 
 ```text
