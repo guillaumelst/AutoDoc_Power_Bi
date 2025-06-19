@@ -4,7 +4,7 @@ Ce projet fournit un ensemble de scripts Python 🐍 permettant d'automatiser l'
 
 - 📂 Extrait le fichier template et récupère le schéma du modèle de données (`DataModelSchema`).
 - 🔄 Convertit ce schéma en JSON pour le traitement.
-- 📄 Génère un document Word détaillant tables, mesures, colonnes calculées, partitions et hiérarchies du modèle.
+- 📄 Génère un document Word détaillant tables, mesures, colonnes calculées, partitions, hiérarchies et disposition graphique du rapport.
 
 ---
 
@@ -24,7 +24,7 @@ Ce projet fournit un ensemble de scripts Python 🐍 permettant d'automatiser l'
 
 - Python 3.7 ou supérieur 🐍
 - Modules Python :
-  - `python-docx` 📑
+  - `python-docx` 📁
   - `chardet` 🔍
 
 Installez-les via :
@@ -55,6 +55,8 @@ cd votre-projet
 ├── UnzipPBIP.py          # Extraction du .pbit et récupération de DataModelSchema
 ├── EncodeJSON.py         # Conversion du schéma texte en JSON
 ├── autodoc.py            # Génération du document Word à partir du JSON
+├── LayoutFinder.py       # Extraction de la disposition des visuels dans le rapport
+├── Table Doc .py         # Génération de la documentation tabulaire des visuels
 ├── Main_doc_PBI.py       # Script principal orchestrant les étapes
 ├── requirements.txt      # (optionnel) Liste des dépendances Python
 ├── images/               # Dossier pour les exemples d’images
@@ -65,49 +67,59 @@ cd votre-projet
 
 ## ▶️ Utilisation
 
-Le script principal `Main_doc_PBI.py` exécute les trois étapes dans l'ordre :
+Le script principal `Main_doc_PBI.py` exécute toutes les étapes de façon automatique :
 
 ```bash
 python Main_doc_PBI.py
 ```
 
-Cela :
+Cela exécute successivement :
 
-1. 🔍 Extrait et nettoie le `.pbit`, récupère `DataModelSchema` au format `.txt`.
-2. 🔄 Convertit ce `.txt` en JSON (`fichier_converti.json`).
-3. ✍️ Génère `documentation.docx` contenant la documentation de votre modèle.
+1. 🔍 Extraction et nettoyage du `.pbit`, récupération de `DataModelSchema.txt`
+2. 🔄 Conversion du `.txt` en JSON (`fichier_converti.json`)
+3. ✍️ Génération du document `documentation.docx`
+4. 📊 Analyse du layout graphique via `LayoutFinder.py`
+5. 📄 Documentation des visuels via `Table Doc .py`
 
-Vous pouvez également lancer chaque étape séparément :
+Chaque script est exécuté via `subprocess` avec une mesure du temps d'exécution.
+
+Vous pouvez également lancer chaque étape individuellement :
 
 ```bash
-python UnzipPBIP.py [chemin/vers/dossier]
+python UnzipPBIP.py
 python EncodeJSON.py
 python autodoc.py
+python LayoutFinder.py
+python "Table Doc .py"
 ```
 
 ---
 
 ## ✨ Détails des scripts
 
-### 1. `UnzipPBIP.py` 🗜️
+### 1. `UnzipPBIP.py` 💚
+- Recherche et copie le premier fichier `.pbit` du dossier (ou chemin fourni)
+- Le renomme en `.zip` et extrait son contenu
+- Récupère le fichier `DataModelSchema` et le renomme en `.txt`
+- Nettoie les fichiers temporaires
 
-- Recherche et copie le premier fichier `.pbit` du dossier (ou chemin fourni).
-- Renomme la copie en `.zip` et l'extrait en omettant les `CustomVisuals`.
-- Récupère `DataModelSchema` et le renomme en `.txt` dans le dossier racine.
-- Nettoie les fichiers temporaires.
-
-### 2. `EncodeJSON.py` 📝
-
-- Détecte l'encodage du fichier `DataModelSchema.txt`.
-- Tente plusieurs encodages (`utf-8-sig`, `utf-16`, `cp1252`, etc.) pour parser le JSON.
-- Sauvegarde le résultat propre en `fichier_converti.json`.
+### 2. `EncodeJSON.py` 📜
+- Détecte l'encodage du fichier texte contenant le modèle
+- Tente plusieurs encodages (`utf-8-sig`, `utf-16`, `cp1252`, etc.) pour parser le JSON proprement
+- Sauvegarde le résultat dans `fichier_converti.json`
 
 ### 3. `autodoc.py` 📄
+- Lit `fichier_converti.json`
+- Extrait les éléments du modèle de données : tables, mesures, colonnes calculées, hiérarchies, partitions
+- Génère un document Word stylisé
 
-- Lit `fichier_converti.json` et extrait métadonnées :
-  - Tables standards et calculées
-  - Mesures, colonnes calculées, partitions, hiérarchies
-- Construit un document Word (`documentation.docx`) stylé, avec tableaux et en-têtes colorés.
+### 4. `LayoutFinder.py` 📈
+- Analyse les fichiers de layout pour repérer les visuels présents par page
+- Permet d'associer tables, champs et pages d'utilisation
+
+### 5. `Table Doc .py` 📃
+- Compile toutes les données extraites (modèle + layout)
+- Produit une documentation tabulaire lisible, exportable si besoin
 
 ---
 
