@@ -1,14 +1,18 @@
-import json
 from pathlib import Path
+import json
 from docx import Document
 from docx.shared import Pt, RGBColor
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
-# Configuration : ajustez ces chemins si besoin
-INPUT_FILE = r'C:\Users\GLT\eiffage.com\OneDrive - eiffageenergie.be\Documents\Guillaume\Programmation\Auto. Doc. PBI\fichier_converti.json'
-OUTPUT_FILE = r'C:\Users\GLT\eiffage.com\OneDrive - eiffageenergie.be\Documents\Guillaume\Programmation\Auto. Doc. PBI\documentation.docx'
+# Répertoire dans lequel le script est exécuté
+base_dir = Path(__file__).resolve().parent
+
+# Fichiers d'entrée/sortie dans le dossier du script
+INPUT_FILE = base_dir / 'fichier_converti.json'
+OUTPUT_FILE = base_dir / 'documentation.docx'
 EXCLUDE_KEYWORDS = ['LocalDateTable', 'DateTableTemplate']
+
 
 def load_report(path):
     with open(path, 'r', encoding='utf-8') as f:
@@ -43,7 +47,7 @@ def extract_metadata(report):
             if isinstance(expr, list):
                 expr = '\n'.join(expr)
             info['measures'].append({'name': m.get('name'), 'expression': expr})
-        # Colonnes calculées
+        # Colonne calculée
         for col in tbl.get('columns', []):
             if col.get('type') in ['calculated', 'calculatedTableColumn']:
                 expr = col.get('expression', '')
