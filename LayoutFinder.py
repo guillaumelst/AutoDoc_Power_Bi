@@ -5,8 +5,8 @@ import chardet
 from pathlib import Path
 import argparse
 
-# === 📁 Dossier par défaut ===
-DEFAULT_ROOT = Path(r"C:\Users\GLT\eiffage.com\OneDrive - eiffageenergie.be\Documents\Guillaume\Programmation\Auto. Doc. PBI")
+# 📁 Répertoire dynamique : dossier où se trouve ce script
+DEFAULT_ROOT = Path(__file__).resolve().parent
 
 def detect_encoding(raw_data):
     """Détecte l'encodage à partir d'octets bruts."""
