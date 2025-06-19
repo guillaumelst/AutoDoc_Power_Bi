@@ -3,8 +3,9 @@ import shutil
 from pathlib import Path
 import argparse
 
-# Chemin par défaut si aucun argument fourni
-DEFAULT_ROOT = Path(r"C:\Users\GLT\eiffage.com\OneDrive - eiffageenergie.be\Documents\Guillaume\Programmation\Auto. Doc. PBI")
+# 📁 Chemin par défaut = dossier où le script est situé
+DEFAULT_ROOT = Path(__file__).resolve().parent
+
 
 def extract_pbit_file(root_dir: Path):
     """
