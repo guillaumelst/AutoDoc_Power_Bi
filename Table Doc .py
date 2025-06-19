@@ -6,9 +6,11 @@ from docx.shared import Pt, RGBColor
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
-# === 🔧 Configuration ===
-layout_file = Path(r"C:\Users\GLT\eiffage.com\OneDrive - eiffageenergie.be\Documents\Guillaume\Programmation\Auto. Doc. PBI\Layout.json")
-output_file = Path(r"C:\Users\GLT\eiffage.com\OneDrive - eiffageenergie.be\Documents\Guillaume\Programmation\Auto. Doc. PBI\documentation.docx")
+# === 🔧 Répertoire de base dynamique ===
+base_dir = Path(__file__).resolve().parent
+layout_file = base_dir / "Layout.json"
+output_file = base_dir / "documentation.docx"
+
 
 # === 📥 Chargement JSON Layout ===
 with open(layout_file, encoding='utf-8') as f:
