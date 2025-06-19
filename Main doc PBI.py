@@ -23,6 +23,8 @@ scripts = [
     root_dir / "UnzipPBIP.py",
     root_dir / "EncodeJSON.py",
     root_dir / "autodoc.py",
+    root_dir / "LayoutFinder.py",
+    root_dir / "Table Doc .py"
 ]
 
 total_start = time.time()
