@@ -2,9 +2,13 @@ import json
 import chardet
 from pathlib import Path
 
-# Chemin vers votre fichier
-filename = Path(r'C:\Users\GLT\eiffage.com\OneDrive - eiffageenergie.be\Documents\Guillaume\Programmation\Auto. Doc. PBI\DataModelSchema.txt')
-output_filename = filename.parent / 'fichier_converti.json'
+# Répertoire du script (dynamique)
+base_dir = Path(__file__).resolve().parent
+
+# Fichier source et fichier de sortie
+filename = base_dir / 'DataModelSchema.txt'
+output_filename = base_dir / 'fichier_converti.json'
+
 
 def detect_encoding(raw_data):
     result = chardet.detect(raw_data)
